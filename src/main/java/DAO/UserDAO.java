@@ -1,12 +1,12 @@
 package DAO;
 
 import Model.User;
-import Database.Database;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class userDAO {
+public class UserDAO {
 
     public static void insertUser(Connection conn, User user){
         String sql = "INSERT INTO User (name, email, password, role) VALUES (?,?,?,?)";

@@ -26,8 +26,4 @@ public class User {
         this(-1, name, email, password, role);
     }
 
-//    @Override
-//    public String toString(){
-//        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role + "}\n";
-//    }
 }

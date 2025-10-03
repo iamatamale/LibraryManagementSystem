@@ -1,13 +1,23 @@
 package Database;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Database {
-    private static final String url = "jdbc:sqlite:LibraryManagementSystem.db";
+    private static final String data_folder = "data";
+    private static final String db_name = "LibraryManagementSystem.db";
+    private static final String url;
 
+    static{
+        File folder = new File(data_folder);
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+        url = "jdbc:sqlite:" + data_folder + "/" + db_name;
+    }
     public static Connection getConnection() throws SQLException{
         return DriverManager.getConnection(url);
     }
