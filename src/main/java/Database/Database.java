@@ -41,10 +41,10 @@ public class Database {
             stmt.executeUpdate(bookTable());
             stmt.executeUpdate(userTable());
             stmt.executeUpdate(borrowTable());
-            System.out.println("Tables created successfully");
+            //System.out.println("Tables created successfully");
 
             stmt.executeUpdate("PRAGMA foreign_keys=ON");
-            System.out.println("Foreign keys enabled");
+            //System.out.println("Foreign keys enabled");
 
         }catch(SQLException e){
             System.err.println(e.getMessage());

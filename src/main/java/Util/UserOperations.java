@@ -3,6 +3,7 @@ import Model.User;
 import DAO.UserDAO;
 
 import java.sql.Connection;
+import java.util.Scanner;
 
 public class UserOperations {
     public static void printUsers(Connection conn){
@@ -43,4 +44,41 @@ public class UserOperations {
         UserDAO.deleteUser(conn, id);
     }
 
+    public static User registerNewUser(Connection conn){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter name");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter email");
+        String email = scanner.nextLine();
+
+        System.out.println("Enter password");
+        String password = scanner.nextLine();
+
+        User registeredUser =   new User(name, email, password, "user");
+        UserDAO.insertUser(conn, registeredUser);
+        return registeredUser;
+    }
+    public static User loginUser(Connection conn){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter your email");
+        String email = scanner.nextLine();
+
+        User activeUser = null;
+        User user = UserDAO.getUserByEmail(conn, email);
+        if(user != null){
+            System.out.println("Enter your password");
+            String password = scanner.nextLine();
+            if(user.getPassword().equals(password)){
+                activeUser = user;
+            }else{
+                System.out.println("Incorrect password");
+            }
+        }else{
+            System.out.println("User not found");
+        }
+        return activeUser;
+    }
 }
