@@ -32,12 +32,15 @@ public class UserOperations {
         User user2 = new User("admin", "admin@gmail.com", "pw", "admin");
         User dupEmail = new User("HACKER", "hacked@haha.com", "goob", "admin");
 
+
         UserDAO.insertUser(conn, u);
         UserDAO.insertUser(conn, user);
         UserDAO.insertUser(conn, user2);
         UserDAO.insertUser(conn, dupEmail);
+
     }
     public static void deleteUserByID(Connection conn, int id){
         UserDAO.deleteUser(conn, id);
     }
+
 }

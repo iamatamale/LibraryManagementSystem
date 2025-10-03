@@ -11,12 +11,18 @@ public class UserDAO {
     public static void insertUser(Connection conn, User user){
         String sql = "INSERT INTO User (name, email, password, role) VALUES (?,?,?,?)";
 
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+        try(PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
             pstmt.setString(3, user.getPassword());
             pstmt.setString(4, user.getRole());
             pstmt.executeUpdate();
+
+            try(ResultSet rs = pstmt.getGeneratedKeys()){
+                if(rs.next()){
+                    user.setId(rs.getInt(1));
+                }
+            }
             System.out.println("User inserted successfully: " + user.getName());
         } catch (SQLException e){
             if(e.getMessage().contains("UNIQUE constraint failed") ){
@@ -98,7 +104,26 @@ public class UserDAO {
         return user;
     }
 
-    //TODO public static void updateUser(Connection conn, User user){}
+    public static void updateUser(Connection conn, User user){
+        String sql = "UPDATE User SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, user.getName());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getPassword());
+            pstmt.setString(4, user.getRole());
+            pstmt.setInt(5, user.getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if(rowsAffected > 0){
+                System.out.println("User updated successfully");
+            }else{
+                System.out.println("No user found with ID");
+            }
+        } catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+    }
     public static void deleteUser(Connection conn, int id){
         String sql = "DELETE FROM User WHERE id = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
