@@ -70,7 +70,6 @@ public class Database {
                 "role TEXT NOT NULL)";
         return userTable;
     }
-
     public static String borrowTable(){
         String borrowTable = "CREATE TABLE IF NOT EXISTS Borrow (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -83,5 +82,20 @@ public class Database {
         return borrowTable;
     }
 
+    //call this method to clear all tables and reset autoincrement ID
+    public static void clearTables(Connection conn){
+        try(Statement stmt = conn.createStatement()){
+            stmt.executeUpdate("DELETE FROM Book");
+            stmt.executeUpdate("DELETE FROM User");
+            stmt.executeUpdate("DELETE FROM Borrow");
 
+            stmt.executeUpdate("DELETE FROM sqlite_sequence WHERE name='Book'");
+            stmt.executeUpdate("DELETE FROM sqlite_sequence WHERE name='User'");
+            stmt.executeUpdate("DELETE FROM sqlite_sequence WHERE name='Borrow'");
+
+            System.out.println("Tables cleared successfully and IDs reset");
+        }catch(SQLException e){
+            System.err.println(e.getMessage());
+        }
+    }
 }

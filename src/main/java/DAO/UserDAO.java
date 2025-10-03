@@ -73,4 +73,40 @@ public class UserDAO {
         }
         return user;
     }
+    public static User getUserByEmail(Connection conn, String email){
+        User user = null;
+        String sql = "SELECT * FROM User WHERE email = ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, email);
+            try(ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    user = new User(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("role")
+                    );
+                }
+            }
+        } catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return user;
+    }
+
+    //TODO public static void updateUser(Connection conn, User user){}
+    public static void deleteUser(Connection conn, int id){
+        String sql = "DELETE FROM User WHERE id = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("User deleted successfully");
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+    }
 }

@@ -18,6 +18,14 @@ public class UserOperations {
             System.out.println("User not found");
         }
     }
+    public static void printUserByEmail(Connection conn, String email){
+        User u = UserDAO.getUserByEmail(conn, email);
+        if(u != null){
+            System.out.println(u);
+        }else{
+            System.out.println("User not found");
+        }
+    }
     public static void createTestUsers(Connection conn){
         User u = new User("test", "<EMAIL>", "test", "user");
         User user = new User("test", "test", "test", "user");
@@ -28,5 +36,8 @@ public class UserOperations {
         UserDAO.insertUser(conn, user);
         UserDAO.insertUser(conn, user2);
         UserDAO.insertUser(conn, dupEmail);
+    }
+    public static void deleteUserByID(Connection conn, int id){
+        UserDAO.deleteUser(conn, id);
     }
 }
