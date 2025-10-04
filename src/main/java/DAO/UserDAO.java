@@ -134,4 +134,20 @@ public class UserDAO {
             System.err.println(e.getMessage());
         }
     }
+
+    public static boolean checkIfEmailInUse(Connection conn, String email){
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM User WHERE email = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, email);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()){
+                    count = rs.getInt(1);
+                }
+            }
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return count > 0;
+    }
 }

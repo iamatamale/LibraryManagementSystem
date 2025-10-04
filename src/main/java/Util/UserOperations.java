@@ -53,6 +53,12 @@ public class UserOperations {
         System.out.println("Enter email");
         String email = scanner.nextLine();
 
+        while(UserDAO.checkIfEmailInUse(conn, email)){
+            System.out.println("Email already in use");
+            System.out.println("Enter email");
+            email = scanner.nextLine();
+        }
+
         System.out.println("Enter password");
         String password = scanner.nextLine();
 
@@ -65,6 +71,7 @@ public class UserOperations {
 
         System.out.println("Enter your email");
         String email = scanner.nextLine();
+
 
         User activeUser = null;
         User user = UserDAO.getUserByEmail(conn, email);
