@@ -74,4 +74,26 @@ public class BookDAO {
         }
         return availableBooks;
     }
+    public static List<Book> getBorrowedBooks(Connection conn){
+        List<Book> borrowedBooks = new ArrayList<>();
+        String sql = "SELECT * FROM Book WHERE available = 0";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            try(ResultSet rs = pstmt.executeQuery()){
+                while(rs.next()){
+                    borrowedBooks.add(new Book(
+                            rs.getInt("id"),
+                            rs.getString("title"),
+                            rs.getString("author"),
+                            rs.getString("category"),
+                            rs.getInt("year"),
+                            rs.getBoolean("available")
+                    ));
+                }
+            }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+        return borrowedBooks;
+    }
 }

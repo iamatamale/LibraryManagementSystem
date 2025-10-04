@@ -1,10 +1,10 @@
 import java.sql.Connection;
 import java.util.Scanner;
 
-import DAO.UserDAO;
-import Database.Database;
-import Model.User;
+import DAO.*;
+import Model.*;
 import Util.*;
+import Database.Database;
 
 public class LibraryManagementSystem {
     public static void main(String[] args) {
@@ -27,9 +27,9 @@ public class LibraryManagementSystem {
             //System.out.println("Active User: " + activeUser.getName());
 
             if(activeUser.getRole().equals("admin")){
-                adminOptions(conn);
+                adminOptions.adminOptionsInterface(conn);
             }else if(activeUser.getRole().equals("user")){
-                userOptions(conn);
+                userOptions.userOptionsInterface(conn);
             }else{
                 System.out.println("User missing role. Contact admin.");
                 System.exit(15);
@@ -77,30 +77,5 @@ public class LibraryManagementSystem {
         }
         return activeUser;
     }
-    public static void userOptions(Connection conn){
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Select An Option");
-        System.out.println("1. View Available Books");
-        System.out.println("2. View Your Checked Out Books");
-        System.out.println("3. Borrow Book");
-        System.out.println("4. Return Book");
-        System.out.println("5. Update Information");
-        System.out.println("6. Logout");
-    }
-    public static void adminOptions(Connection conn){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Select An Option");
-        System.out.println("1. View All Books");
-        System.out.println("4. View All Borrowed Books");
-        System.out.println("2. Add Book");
-        System.out.println("3. Remove Book");
-        System.out.println("5. View All Users");
-        System.out.println("6. Update User Info");
-        System.out.println("7. Remove User");
-        System.out.println("8. Logout");
-
-
-    }
 }
