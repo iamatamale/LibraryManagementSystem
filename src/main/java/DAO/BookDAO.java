@@ -96,4 +96,14 @@ public class BookDAO {
         }
         return borrowedBooks;
     }
+    public static void deleteBook(Connection conn, int id){
+        String sql = "DELETE FROM Book WHERE id = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Book deleted successfully");
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package Util;
 
+import DAO.BookDAO;
+
 import java.sql.Connection;
 import java.util.Scanner;
 
@@ -41,6 +43,33 @@ public class adminOptions {
                 System.out.println("");
                 System.out.println("Press any key and enter to continue...");
                 scanner.nextLine();
+                break;
+            case 3:
+                System.out.println("Adding a new book");
+                BookOperations.addNewBook(conn);
+                break;
+            case 4:
+                System.out.println("Removing a book");
+                System.out.println("Enter book id");
+                int id = scanner.nextInt();
+                BookDAO.deleteBook(conn, id);
+                break;
+            case 5:
+                System.out.println("Viewing all users");
+                UserOperations.printUsers(conn);
+                break;
+            case 6:
+                System.out.println("Updating user info");
+                UserOperations.printUsers(conn);
+                System.out.println("Enter user id");
+                int idUpdate = scanner.nextInt();
+                UserOperations.adminUpdateUserInfo(conn, idUpdate);
+                break;
+            case 7:
+                System.out.println("Removing user");
+                System.out.println("Enter user id");
+                int idRemove = scanner.nextInt();
+                UserOperations.deleteUserByID(conn, idRemove);
                 break;
             case 8:
                 System.out.println("Logging out");

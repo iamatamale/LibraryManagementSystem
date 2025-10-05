@@ -88,4 +88,46 @@ public class UserOperations {
         }
         return activeUser;
     }
+    public static void adminUpdateUserInfo(Connection conn, int id){
+        Scanner scanner = new Scanner(System.in);
+        int choice = -1;
+        User user = UserDAO.getUserById(conn, id);
+
+        while(choice != 4){
+            System.out.println("Select what to update: ");
+            System.out.println("1. Name");
+            System.out.println("2. Email");
+            System.out.println("3. Password");
+            System.out.println("4. Exit");
+
+            choice = scanner.nextInt();
+        }
+
+        switch(choice){
+            case 1:
+                System.out.println("Enter new name");
+                String newName = scanner.nextLine();
+                user.setName(newName);
+                UserDAO.updateUser(conn, user);
+                break;
+            case 2:
+                System.out.println("Enter new email");
+                String newEmail = scanner.nextLine();
+                while(UserDAO.checkIfEmailInUse(conn, newEmail)){
+                    System.out.println("Email already in use");
+                    newEmail = scanner.nextLine();
+                }
+                user.setEmail(newEmail);
+                UserDAO.updateUser(conn, user);
+                break;
+            case 3:
+                System.out.println("Enter new password");
+                String newPassword = scanner.nextLine();
+                user.setPassword(newPassword);
+                break;
+            default:
+                System.out.println("Invalid Option");
+                break;
+        }
+    }
 }

@@ -4,6 +4,7 @@ import DAO.BookDAO;
 import Model.Book;
 
 import java.sql.Connection;
+import java.util.Scanner;
 
 public class BookOperations {
     public static void printAllBooks(Connection conn){
@@ -13,6 +14,11 @@ public class BookOperations {
     }
     public static void printAllBorrowedBooks(Connection conn){
         for(Book b : BookDAO.getBorrowedBooks(conn)){
+            System.out.println(b);
+        }
+    }
+    public static void printAllAvailableBooks(Connection conn){
+        for(Book b : BookDAO.getAvailableBooks(conn)){
             System.out.println(b);
         }
     }
@@ -44,5 +50,23 @@ public class BookOperations {
         BookDAO.insertBook(conn, b11);
         BookDAO.insertBook(conn, b12);
         BookDAO.insertBook(conn, b13);
+    }
+
+    public static void addNewBook(Connection conn){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter title");
+        String title = scanner.nextLine();
+        System.out.println("Enter author");
+        String author = scanner.nextLine();
+        System.out.println("Enter category");
+        String category = scanner.nextLine();
+        System.out.println("Enter year");
+        int year = scanner.nextInt();
+        System.out.println("Enter availability");
+        boolean available = scanner.nextBoolean();
+
+        Book b = new Book(title, author, category, year, available);
+        BookDAO.insertBook(conn, b);
     }
 }
